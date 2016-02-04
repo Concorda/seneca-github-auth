@@ -16,7 +16,7 @@ If you're using this plugin module, feel to contact on twitter if you have any q
 seneca-github-auth's source can be read in an annotated fashion by,
 
 - running `npm run annotate`
-- viewing [online](http://github.com/senecajs/seneca-github-auth.js/doc/github-auth.html).
+- viewing [online](http://github.com/senecajs/seneca-github-auth/doc/github-auth.html).
 
 The annotated source can be found locally at [./doc/github-auth.html]().
 
