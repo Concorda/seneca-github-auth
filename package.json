@@ -33,7 +33,6 @@
     "lint": "lab test -dL",
     "annotate": "docco github-auth.js -o doc"
   },
-  },
   "homepage": "https://github.com/nherment/seneca-github-auth",
   "dependencies": {
     "passport-github": "1.1.0",
