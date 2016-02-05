@@ -9,6 +9,16 @@ For a gentle introduction to Seneca itself, see the [senecajs.org](http://seneca
 
 If you're using this plugin module, feel to contact on twitter if you have any questions! :) [@rjrodger](http://twitter.com/rjrodger)
 
+## About
+
+seneca-github-auth's source can be read in an annotated fashion by,
+
+- running `npm run annotate`
+- viewing [online](http://htmlpreview.github.io/?https://github.com/senecajs/seneca-github-auth/blob/master/doc/github-auth.html).
+
+The annotated source can be found locally at
+[here](./doc/github-auth.html).
+
 ### Install
 
 ```sh
@@ -58,5 +68,8 @@ The JSON object provided for this actions contains following data from Github lo
 
  Default value for callbackUrl: '/auth/github/callback'
 
+ ##  License
 
+  Copyright Mircea Alexandru and other contributors 2016, Licensed under [MIT][].
 
+  [MIT]: ./LICENSE
