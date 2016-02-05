@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nherment/seneca-github-auth.git"
+    "url": "git://github.com/senecajs/seneca-github-auth.git"
   },
   "keywords": [
     "seneca",
@@ -32,13 +32,13 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nherment/seneca-github-auth/issues"
+    "url": "https://github.com/senecajs/seneca-github-auth/issues"
   },
   "scripts": {
     "lint": "lab test -dL",
     "annotate": "docco github-auth.js -o doc"
   },
-  "homepage": "https://github.com/nherment/seneca-github-auth",
+  "homepage": "https://github.com/senecajs/seneca-github-auth",
   "dependencies": {
     "passport-github": "1.1.0",
     "lodash": "~4.2.1"
