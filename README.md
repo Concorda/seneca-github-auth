@@ -83,9 +83,9 @@ The JSON object provided for this actions contains following data from Github lo
  [MIT]: ./LICENSE
  [npm-badge]: https://badge.fury.io/js/seneca-github-auth.svg
  [npm-url]: https://badge.fury.io/js/seneca-github-auth.svg
- [david-badge]: https://david-dm.org/mirceaalexandru/seneca-github-auth.svg
- [david-url]: https://david-dm.org/mirceaalexandru/seneca-github-auth
+ [david-badge]: https://david-dm.org/senecajs/seneca-github-auth.svg
+ [david-url]: https://david-dm.org/senecajs/seneca-github-auth
  [gitter-badge]: https://badges.gitter.im/senecajs/seneca.png
  [gitter-url]: https://gitter.im/senecajs/seneca
- [travis-badge]: https://travis-ci.org/mirceaalexandru/seneca-github-auth.svg
- [travis-url]: https://travis-ci.org/mirceaalexandru/seneca-github-auth
+ [travis-badge]: https://travis-ci.org/senecajs/seneca-github-auth.svg
+ [travis-url]: https://travis-ci.org/senecajs/seneca-github-auth
