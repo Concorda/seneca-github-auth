@@ -1,76 +1,61 @@
+var error = require('eraro')({
+  package: 'github-auth'
+})
 
-var GitHubStrategy = require('passport-github').Strategy
-var _ = require('lodash')
+var CommonAuth = require('./lib/common-github-auth')
+var ExpressAuth = require('./lib/express-github-auth')
+var HapiAuth = require('./lib/hapi-github-auth')
 
 module.exports = function (options) {
   var seneca = this
-  var service = 'github'
+  var internals = {}
 
-  var params = {
-    clientID: options.clientID,
-    clientSecret: options.clientSecret,
-    callbackURL: options.urlhost + (options.callbackUrl || '/auth/github/callback')
-  }
-  params = _.extend(params, options.serviceParams || {})
+  internals.accepted_framworks = [
+    'express',
+    'hapi'
+  ]
+  internals.options = options
 
-  var authPlugin = new GitHubStrategy(params,
-    function (accessToken, refreshToken, profile, done) {
-      seneca.act(
-        {
-          role: 'auth',
-          prepare: 'github_login_data',
-          accessToken: accessToken,
-          refreshToken: refreshToken,
-          profile: profile
-        }, done)
-    }
-  )
-
-  var prepareLoginData = function (args, cb) {
-    var accessToken = args.accessToken
-    var refreshToken = args.refreshToken
-    var profile = args.profile
-
-    var data = {
-      identifier: '' + profile.id,
-      nick: profile.username,
-      username: profile.username,
-      credentials: {
-        access: accessToken,
-        refresh: refreshToken
-      },
-      userdata: profile,
-      when: new Date().toISOString()
-    }
-
-    data = _.extend({}, data, profile)
-    if (data.emails && data.emails.length > 0 && data.emails[0].value) {
-      data.email = data.emails[0].value
-      data.nick = data.email
-    }
-    if (data.name && _.isObject(data.name)) {
-      data.firstName = data.name.givenName
-      data.lastName = data.name.familyName
-      data.name = data.name || (data.firstName + ' ' + data.lastName)
-      delete data.name
-    }
-    data.name = data.name || data.displayName
-
-    data[ service + '_id' ] = data.identifier
-
-    data.service = data.service || {}
-    data.service[ service ] = {
-      credentials: data.credentials,
-      userdata: data.userdata,
-      when: data.when
-    }
-
-    cb(null, data)
+  if (!options.framework) {
+    options.framework = 'express'
   }
 
-  seneca.add({role: 'auth', prepare: 'github_login_data'}, prepareLoginData)
+  internals.choose_framework = function () {
+    if (internals.options.framework === 'express') {
+      internals.load_express_implementation()
+    }
+    else {
+      internals.load_hapi_implementation()
+    }
+  }
 
-  seneca.act({role: 'auth', cmd: 'register_service', service: service, plugin: authPlugin, conf: options})
+  internals.check_options = function () {
+    if (seneca.options().plugin.web && seneca.options().plugin.web.framework) {
+      internals.options.framework = seneca.options().plugin.web.framework
+    }
+
+    if (internals.accepted_framworks.indexOf(internals.options.framework) === -1) {
+      throw error('Framework type <' + internals.options.framework + '> not supported.')
+    }
+  }
+
+  internals.load_express_implementation = function () {
+    seneca.use(ExpressAuth, internals.options)
+    seneca.use(CommonAuth, internals.options)
+  }
+
+  internals.load_hapi_implementation = function () {
+    seneca.use(HapiAuth, internals.options)
+    seneca.use(CommonAuth, internals.options)
+  }
+
+  function init (args, done) {
+    internals.check_options()
+    internals.choose_framework()
+    done()
+  }
+
+  seneca.add('init: github-auth', init)
 
   return {
     name: 'github-auth'
